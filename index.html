@@ -1,7 +1,9 @@
 <html>
 <head>
 	<title>How Was Your Day?</title>
-  <script type="text/javascript" src='https://rawgit.com/DmitryBaranovskiy/raphael/master/raphael-min.js'></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script src="raphael.js"></script>
+	<script type="text/javascript" src="script.js"></script>
 
 </head>
 <body>
@@ -11,12 +13,17 @@
 var paper = Raphael(10, 50, 320, 200);
 
 // Creates circle at x = 50, y = 40, with radius 10
-var circle = paper.circle(50, 40, 10);
+var text = paper.text(150, 100, 'yoshie');
 // Sets the fill attribute of the circle to red (#f00)
-circle.attr("fill", "#f00");
+text.attr({
+	"fill": "orange",
+	"font-size": "50px",
+	"font-family": "arial"
+});
+text.hover()
 
 // Sets the stroke attribute of the circle to white
-circle.attr("stroke", "#fff");
+// circle.attr("stroke", "#fff");
 	</script>
 
 </body>

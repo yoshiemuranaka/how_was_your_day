@@ -1,6 +1,6 @@
 body {
-    background: #333;
-    color: #fff;
+    background: #fff;
+    color: #eee;
     font: 300 100.1% "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
 }
 #holder {
@@ -14,6 +14,7 @@ body {
 #copy {
     bottom: 0;
     font: 300 .7em "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+    color: #808080;
     position: absolute;
     right: 1em;
     text-align: right;

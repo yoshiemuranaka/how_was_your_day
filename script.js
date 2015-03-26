@@ -23,7 +23,6 @@ $(document).ready(function(){
 		    		text: text
 		    	})
 	    	}
-	    console.log(data)
 
 	   	//RAPHAEL GOODIES
 		//CREATING RAPHAEL OBJECT & LOGIC FOR CUSTOM SEGMENT CREATING PATH FOR PIE SLICE
@@ -47,8 +46,6 @@ $(document).ready(function(){
                 paths[i].animate({segment: [200, 200, 150, start, start += val, newDataSet[i].color ]}, ms, "bounce");
             }
         }
-
-        console.log(data)
 
         //PARSING THROUGH DATA
             var  laugh = {
@@ -125,13 +122,23 @@ $(document).ready(function(){
         for (i = 0; i < ii; i++) {
             var val = 360 / total * newDataSet[i].value;
             (function (i, val) {
-                paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#fff"}));
+                paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#eee"}).hover(function(){
+                		console.log($(this))
+                	}));
             })(i, val);
             start += val;
         }
         animate(1000);
 
+        //ADDITIONAL TEXT
+        var today = new Date(); 
 
-		}
+        var t = r.text(200, 20, today).attr({font: '100 20px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif', fill: "#808080"});
+
+        var memberSince = data[0].date.split(" ")[0]
+        var copy = $('#copy').text('Member since ' + memberSince)
+		
+		}//END SUCCESS
  	}); //END AJAX
+	
 })//END DOCUMENT.READY

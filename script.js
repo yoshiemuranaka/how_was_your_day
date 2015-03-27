@@ -85,8 +85,8 @@ $(document).ready(function(){
             //FOR EACH ENTRY, PUT DATA INTO DESIGNATED MOOD HASH AND +=1 VALUE FOR EACH CORRESPONDING ENTRY
             for (var i = 0, ii = data.length; i < ii; i++){
             	if (data[i].mood == ":D"){
-            		laugh.value += 1
-            		laugh.content.push(data[i])
+            		elated.value += 1
+            		elated.content.push(data[i])
             	}else if (data[i].mood == ":)"){
                     happy.value += 1
                     happy.content.push(data[i])
@@ -97,17 +97,17 @@ $(document).ready(function(){
                     sad.value += 1
                     sad.content.push(data[i])
                 }else{
-                	cry.value += 1
-                	cry.content.push(data[i])
+                	down.value += 1
+                	down.content.push(data[i])
                 }
             }
 
             var newDataSet = []
-            	newDataSet.push(laugh)
+            	newDataSet.push(elated)
                 newDataSet.push(happy)
                 newDataSet.push(indifferent)
                 newDataSet.push(sad)
-                newDataSet.push(cry)
+                newDataSet.push(down)
 
             var paths = r.set(),
                 total,

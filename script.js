@@ -37,6 +37,7 @@ $(document).ready(function(){
                     fill: "#" + color
                 };
             };
+
             //ANIMATING/EXTENDING THE RADIUS TO MAKE CONSUMED VALUES VILISBLE
             function animate(ms) {
                 var start = 0,
@@ -109,10 +110,21 @@ $(document).ready(function(){
                 newDataSet.push(sad)
                 newDataSet.push(down)
 
+            //KEY
+            var key = Raphael("key");
+            var colorCode = key.set()
+            colorCode.attr({stroke: "#808080", "stroke-width" : 1})
+
+            for (var i = 0, ii = newDataSet.length; i < ii; i++){
+                
+                colorCode.push(key.rect(200 + i, 350, 15, 15, 1))
+                
+            }
+
             var paths = r.set(),
                 total,
                 start, 
-                bg = r.circle(200, 200, 0).attr({stroke: "#bfbfbf", "stroke-width": 3});
+                bg = r.circle(200, 200, 0).attr({stroke: "#bfbfbf", "stroke-width": 2});//CIRCLE BORDER
 
             //ITERATING THROUGH DATA INTO PATH SEGMENTS ON RAPHAEL OBJECT -- 1 RADIUS SO PIE SLICE IS NOT VISIBLE UNTIL ANIMATE FUNCTION CALLED
             total = 0;

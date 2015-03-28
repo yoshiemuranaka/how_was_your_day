@@ -25,7 +25,7 @@ $(document).ready(function(){
 	    	}
 
     	   	//RAPHAEL GOODIES
-    		//CREATING RAPHAEL OBJECT & LOGIC FOR CUSTOM SEGMENT CREATING PATH ELEMENTS FOR PIE SLICE
+    		//CREATING RAPHAEL CANVAS OBJECT & LOGIC FOR CUSTOM SEGMENT CREATING PATH ELEMENTS (EACH PIE SLICE)
             var r = Raphael("holder");
 
             r.customAttributes.segment = function (x, y, r, a1, a2, color) {
@@ -70,7 +70,7 @@ $(document).ready(function(){
 
             var sad = {
                 "mood": ":(",
-                "color": "b2d8d",
+                "color": "407cc9",
                 "value": 0,
                 "content": [] 
             }
@@ -125,7 +125,7 @@ $(document).ready(function(){
                 (function (i, val) {
                     paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#808080"}).hover(function(){
                             //do some hover stuff
-                    		console.log($(this)[0][0].attributes.fill)
+                    		// console.log($(this)[0][0].attributes.fill)
                     	})
                     );
                 })(i, val);

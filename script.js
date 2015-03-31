@@ -63,7 +63,7 @@ $(document).ready(function(){
             }
 
             //FILTERING THROUGH DATA ARRAY AND RETURNING NEW DATA SET TO BE USED FOR RAPHAEL OBJECTS
-            function filter(data){
+            function filter(data, start, end){
                 
                 //DECLARING HASH OBJECTS WITH DESIGNATED COLOR VALUE
                 var newDataSet = []
@@ -155,6 +155,11 @@ $(document).ready(function(){
             
             animate(1000);
 
+
+
+
+
+
              //KEY
             var key = Raphael("key");
             var colorCode = key.set()
@@ -177,6 +182,10 @@ $(document).ready(function(){
             var memberSince = data[0].date.split(" ")[0]
             var copy = $('#copy').text('Member since ' + memberSince)
     		
+
+
+
+
 		}//END SUCCESS
  	});//END AJAX
 	

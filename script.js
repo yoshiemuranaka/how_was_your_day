@@ -1,31 +1,32 @@
 $(document).ready(function(){
 
-	var data = []
-	//CALLING GOOGLE SHEETS	
-	$.ajax({ 
-		url: 'http://spreadsheets.google.com/feeds/list/1pX221_XvKav8sTbd4mfcgU3CfsxNqbTXboHPXjP49Uw/1/public/basic?alt=json',
-		type: 'get',
-		dataType: "json",
-		success: function(json){  
-		   //ITERATING THROUGH EACH ENTRY
-		   for ( var i = 0; i < json.feed.entry.length; i++){
-				//PARSING THROUGH JSON 	   
-				var entry = json.feed.entry[i];
+    var data = []
+    //CALLING GOOGLE SHEETS 
+    $.ajax({ 
+        url: 'http://spreadsheets.google.com/feeds/list/1pX221_XvKav8sTbd4mfcgU3CfsxNqbTXboHPXjP49Uw/1/public/basic?alt=json',
+        type: 'get',
+        dataType: "json",
+        success: function(json){  
+           
+           //ITERATING THROUGH EACH ENTRY FROM GOOGLE SHEETS AND PUSHING INTO DATA ARRAY
+           for ( var i = 0; i < json.feed.entry.length; i++){
+                //PARSING THROUGH JSON     
+                var entry = json.feed.entry[i];
 
-			    //PARSING CONTENT DATA TO ISOLATE MOOD & TEXT  
-			    var mood = entry.content.$t.substring(34, 36)
-			    // var text = entry.content.$t.split(", tellmewhatyoudid.: ")[1]
+                //PARSING CONTENT DATA TO ISOLATE MOOD & TEXT  
+                var mood = entry.content.$t.substring(34, 36)
+                // var text = entry.content.$t.split(", tellmewhatyoudid.: ")[1]
 
-		    	//PUSHING HASH INTO DATA ARRAY
-		    	data.push({
-		    		date: entry.title.$t,
-		    		mood: mood,
-		    		// text: text
-		    	})
-	    	}
+                //PUSHING HASH INTO DATA ARRAY
+                data.push({
+                    date: entry.title.$t,
+                    mood: mood,
+                    // text: text
+                })
+            }
 
-    	   	//RAPHAEL GOODIES
-    		//CREATING RAPHAEL CANVAS OBJECT & LOGIC FOR CUSTOM SEGMENT CREATING PATH ELEMENTS (EACH PIE SLICE)
+            //RAPHAEL GOODIES
+            //CREATING RAPHAEL CANVAS AND & LOGIC TO DEFINE CUSTOM SEGMENT CREATING PATH ELEMENT FOR PIE SLICE
             var r = Raphael("holder");
 
             r.customAttributes.segment = function (x, y, r, a1, a2, color) {
@@ -38,77 +39,122 @@ $(document).ready(function(){
                 };
             };
 
-            //ANIMATING/EXTENDING THE RADIUS TO MAKE CONSUMED VALUES VILISBLE
+            //ANIMATIONS
+            //EXTENDING THE RADIUS TO MAKE CONSUMED RAPHAEL PATH VALUES VILISBLE
             function animate(ms) {
                 var start = 0,
                     val;
                 for (i = 0; i < ii; i++) {
+                    console.log(ii, i)
                     val = 360 / total * newDataSet[i].value;
                     paths[i].animate({segment: [200, 200, 150, start, start += val, newDataSet[i].color ]}, ms, "bounce");
                 }
             }
-
-            //PARSING THROUGH DATA
-            var  elated = {
-                "mood": ":D",
-                "color": "df60b6",
-                "value": 0,
-                "content": [] 
-            }
-            var happy = {
-                "mood": ":)",
-                "color": "f9b233",
-                "value": 0,
-                "content": [] 
+            
+            //EXTENDING THE RADIUS TO EXPAND SLICE ON HOVER
+            function expand(fin, fout, icontext, ocontext) {
+                console.log(fin, fout, icontext, ocontext)
+                // var start = 0,
+                //     val;
+                // for (i = 0; i < ii; i++) {
+                //     val = 360 / total * newDataSet[i].value;
+                //     paths[i].animate({segment: [200, 200, 150, start, start += val, newDataSet[i].color ]}, ms, "bounce");
+                // }
             }
 
-            var indifferent = {
-                "mood": ":|",
-                "color": "cbbeb5",
-                "value": 0,
-                "content": [] 
-            }
-
-            var sad = {
-                "mood": ":(",
-                "color": "407cc9",
-                "value": 0,
-                "content": [] 
-            }
-
-             var down = {
-                "mood": ":*(",
-                "color": "31284c",
-                "value": 0,
-                "content": [] 
-            }
-
-            //FOR EACH ENTRY, PUT DATA INTO DESIGNATED MOOD HASH AND +=1 VALUE FOR EACH CORRESPONDING ENTRY
-            for (var i = 0, ii = data.length; i < ii; i++){
-            	if (data[i].mood == ":D"){
-            		elated.value += 1
-            		elated.content.push(data[i])
-            	}else if (data[i].mood == ":)"){
-                    happy.value += 1
-                    happy.content.push(data[i])
-                }else if (data[i].mood == ":|"){
-                    indifferent.value += 1
-                    indifferent.content.push(data[i])
-                }else if (data[i].mood == ":("){
-                    sad.value += 1
-                    sad.content.push(data[i])
-                }else{
-                	down.value += 1
-                	down.content.push(data[i])
+            //FILTERING THROUGH DATA ARRAY AND RETURNING NEW DATA SET TO BE USED FOR RAPHAEL OBJECTS
+            function filter(data, start, end){
+                
+                //DECLARING HASH OBJECTS WITH DESIGNATED COLOR VALUE
+                var newDataSet = []
+                var  elated = {
+                    "mood": ":D",
+                    "color": "df60b6",
+                    "value": 0,
+                    "content": [] 
                 }
+                var happy = {
+                    "mood": ":)",
+                    "color": "f9b233",
+                    "value": 0,
+                    "content": [] 
+                }
+
+                var indifferent = {
+                    "mood": ":|",
+                    "color": "cbbeb5",
+                    "value": 0,
+                    "content": [] 
+                }
+
+                var sad = {
+                    "mood": ":(",
+                    "color": "619bc8",
+                    "value": 0,
+                    "content": [] 
+                }
+
+                 var down = {
+                    "mood": ":*(",
+                    "color": "31284c",
+                    "value": 0,
+                    "content": [] 
+                }
+
+                //ITERATING THROUGH DATA AND PUSHING INTO APPROPRIATE HASH OBJECT
+                for (var i = 0, ii = data.length; i < ii; i++){
+                    if (data[i].mood == ":D"){
+                        elated.value += 1
+                        elated.content.push(data[i])
+                    }else if (data[i].mood == ":)"){
+                        happy.value += 1
+                        happy.content.push(data[i])
+                    }else if (data[i].mood == ":|"){
+                        indifferent.value += 1
+                        indifferent.content.push(data[i])
+                    }else if (data[i].mood == ":("){
+                        sad.value += 1
+                        sad.content.push(data[i])
+                    }else{
+                        down.value += 1
+                        down.content.push(data[i])
+                    }
+                }
+
+                //PUSHING ALL MOOD HASH OBJECTS INTO NEW DATASET ARRAY
+                newDataSet.push(elated);
+                newDataSet.push(happy);
+                newDataSet.push(indifferent);
+                newDataSet.push(sad);
+                newDataSet.push(down);
+                return newDataSet;
             }
 
-            var newDataSet = []
-            	newDataSet.push(elated)
-                newDataSet.push(happy)
-                newDataSet.push(indifferent)
-                newDataSet.push(sad)
-                newDataSet.push(down)
+            var newDataSet = filter(data)
+
+            //ITERATING THROUGH NEW DATA SET INTO RAPHAEL PATHES -- 1 RADIUS SO PIE SLICE IS NOT VISIBLE UNTIL ANIMATE FUNCTION CALLED
+            var paths = r.set()
+            var total = 0;
+            for (var i = 0, ii = newDataSet.length; i < ii; i++) {
+                total += newDataSet[i].value;
+            }
+            var start = 0;
+            for (i = 0; i < ii; i++) {
+                var val = 360 / total * newDataSet[i].value;
+                (function (i, val) {
+                    paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#808080"}).hover(function(){
+                            $(this).expand()
+                            //do some hover stuff
+                            console.log('hey there')
+                            console.log($(this)[0][0].attributes.fill)
+                        })
+                    );
+                })(i, val);
+                start += val;
+            }
+            
+            animate(1000);
+
 
             //KEY
             var key = Raphael("key");
@@ -121,34 +167,8 @@ $(document).ready(function(){
             }
 
             //CIRCLE BORDER
-            var paths = r.set(),
-                total,
-                start, 
-                bg = r.circle(200, 200, 0).attr({stroke: "#bfbfbf", "stroke-width": 2});
-
-            //ITERATING THROUGH DATA INTO PATH SEGMENTS ON RAPHAEL OBJECT -- 1 RADIUS SO PIE SLICE IS NOT VISIBLE UNTIL ANIMATE FUNCTION CALLED
-            total = 0;
-            for (var i = 0, ii = newDataSet.length; i < ii; i++) {
-                total += newDataSet[i].value;
-            }
-            start = 0;
-            for (i = 0; i < ii; i++) {
-                var val = 360 / total * newDataSet[i].value;
-                (function (i, val) {
-                    paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#808080"}).hover(function(){
-                            //do some hover stuff
-                    		// console.log($(this)[0][0].attributes.fill)
-
-                            console.log('hey there')
-                    		console.log($(this)[0][0].attributes.fill)
-                    	})
-                    );
-                })(i, val);
-                start += val;
-            }
-            
+            var bg = r.circle(200, 200, 0).attr({stroke: "#bfbfbf", "stroke-width": 2});
             bg.animate({r: 151}, 1000, "bounce");
-            animate(1000);
 
             //ADDITIONAL TEXT
             var today = new Date(); 
@@ -157,8 +177,9 @@ $(document).ready(function(){
 
             var memberSince = data[0].date.split(" ")[0]
             var copy = $('#copy').text('Member since ' + memberSince)
-    		
-		}//END SUCCESS
- 	});//END AJAX
-	
+            
+
+        }//END SUCCESS
+    });//END AJAX
+    
 })//END DOCUMENT.READY

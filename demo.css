@@ -32,14 +32,3 @@ body {
 #copy a {
     color: #fff;
 }
-
-
-  //KEY
-            var key = Raphael("key");
-            var colorCode = key.set()
-            colorCode.attr({stroke: "#bfbfbf"})
-            for (var i = 0, ii = newDataSet.length; i < ii; i++){
-                var percent = newDataSet.indexOf(newDataSet[i])+1 / newDataSet.length
-                colorCode.push(key.rect( 20, 80 * percent, 15, 15, 1).attr({fill: "#" + newDataSet[i].color}))
-                colorCode.push(key.text( 50, 80 * percent, newDataSet[i].mood).attr({ fill: "#808080", stroke: "none", "font-size": 15 }))
-            }

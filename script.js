@@ -137,7 +137,7 @@ $(document).ready(function(){
                     }
                 }
 
-                //PUSHING ALL MOOD HASH OBJECTS INTO NEW DATASET ARRAY
+                //PUSHING ALL MOOD HASH OBJECTS INTO NEWDATASET ARRAY
                 newDataSet.push(elated);
                 newDataSet.push(happy);
                 newDataSet.push(indifferent);
@@ -149,7 +149,7 @@ $(document).ready(function(){
             animate(1000)
 
 
-            //KEY
+        //KEY
             var key = Raphael("key");
             var colorCode = key.set()
             colorCode.attr({stroke: "#bfbfbf"})
@@ -159,11 +159,11 @@ $(document).ready(function(){
                 colorCode.push(key.text( 50, 80 * percent, newDataSet[i].mood).attr({ fill: "#808080", stroke: "none", "font-size": 15 }))
             }
 
-            //CIRCLE BORDER
+        //CIRCLE BORDER
             var bg = r.circle(200, 200, 0).attr({stroke: "#bfbfbf", "stroke-width": 2});
             bg.animate({r: 151}, 1000, "bounce");
 
-            //ADDITIONAL TEXT
+        //ADDITIONAL TEXT
             var today = new Date(); 
 
             var t = r.text(200, 20, today).attr({font: '100 20px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif', fill: "#808080"});

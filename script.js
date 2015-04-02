@@ -156,7 +156,7 @@ $(document).ready(function(){
             for (var i = 0, ii = newDataSet.length; i < ii; i++){
                 var percent = newDataSet.indexOf(newDataSet[i])+1 / newDataSet.length
                 colorCode.push(key.rect( 20, 80 * percent, 15, 15, 1).attr({fill: "#" + newDataSet[i].color}))
-                colorCode.push(key.text( 50, 80 * percent, newDataSet[i].mood).attr({ fill: "#808080", stroke: "none", "font-size": 15 }))
+                colorCode.push(key.text( 55, 80 * percent + 6, newDataSet[i].mood).attr({ fill: "#808080", stroke: "none", "font-size": 15 }))
             }
 
         //CIRCLE BORDER

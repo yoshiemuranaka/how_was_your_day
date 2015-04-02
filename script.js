@@ -43,28 +43,39 @@ $(document).ready(function(){
                 };
             };
 
+            //ITERATING THROUGH NEW DATA SET INTO RAPHAEL PATHES -- 1 RADIUS SO PIE SLICE IS NOT VISIBLE UNTIL ANIMATE FUNCTION CALLED
+            var total = 0;
+            for (var i = 0, ii = newDataSet.length; i < ii; i++) {
+                total += newDataSet[i].value;
+            }
+            var start = 0;
+            for (i = 0; i < ii; i++) {
+                var val = 360 / total * newDataSet[i].value;
+                (function (i, val) {
+                    paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#808080"}).hover(function(){
+                            expand(paths[i])
+                        })
+                    );
+                })(i, val);
+                start += val;
+            }
+          
+
         //FUNCTIONS
             //EXTENDING THE RADIUS TO MAKE CONSUMED RAPHAEL PATH VALUES VILISBLE
             function animate(ms) {
                 var start = 0,
                     val;
-                    console.log(newDataSet, paths)
                 for (i = 0; i < ii; i++) {
-                    console.log(ii, i)
                     val = 360 / total * newDataSet[i].value;
                     paths[i].animate({segment: [200, 200, 150, start, start += val, newDataSet[i].color ]}, ms, "bounce");
                 }
             }
             
             //EXTENDING THE RADIUS TO EXPAND SLICE ON HOVER
-            function expand(event) {
-                console.log(event.target)
-                // var start = 0,
-                //     val;
-                // for (i = 0; i < ii; i++) {
-                //     val = 360 / total * newDataSet[i].value;
-                //     paths[i].animate({segment: [200, 200, 150, start, start += val, newDataSet[i].color ]}, ms, "bounce");
-                // }
+            function expand(object) {
+                console.log(object)
+                object.animate({opacity: 0.5})
             }
 
             //FILTERING THROUGH DATA ARRAY AND RETURNING NEW DATA SET TO BE USED FOR RAPHAEL OBJECTS
@@ -135,30 +146,7 @@ $(document).ready(function(){
                 return newDataSet;
             }
 
-            function init(){
-                //ITERATING THROUGH NEW DATA SET INTO RAPHAEL PATHES -- 1 RADIUS SO PIE SLICE IS NOT VISIBLE UNTIL ANIMATE FUNCTION CALLED
-                var total = 0;
-                for (var i = 0, ii = newDataSet.length; i < ii; i++) {
-                    total += newDataSet[i].value;
-                }
-                var start = 0;
-                for (i = 0; i < ii; i++) {
-                    var val = 360 / total * newDataSet[i].value;
-                    (function (i, val) {
-                        paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#808080"}).hover(function(){
-                                expand(event)
-                                //r.path().stop().animate({segment: [opacity: .5]})
-                            })
-                        );
-                    })(i, val);
-                    start += val;
-                }
-                
-            }
-
-            init()
-            // animate(1000);
-            //animate callback function
+            animate(1000)
 
 
             //KEY

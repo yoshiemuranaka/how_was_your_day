@@ -3,7 +3,7 @@ $(document).ready(function(){
     var data = []
     //CALLING GOOGLE SHEETS 
     $.ajax({ 
-        url: 'http://spreadsheets.google.com/feeds/list/1pX221_XvKav8sTbd4mfcgU3CfsxNqbTXboHPXjP49Uw/2/public/basic?alt=json',
+        url: 'http://spreadsheets.google.com/feeds/list/1pX221_XvKav8sTbd4mfcgU3CfsxNqbTXboHPXjP49Uw/1/public/basic?alt=json',
         type: 'get',
         dataType: "json",
         success: function(json){  
@@ -25,14 +25,43 @@ $(document).ready(function(){
                 })
             }
 
-        //RAPHAEL GOODIES ======================================================================
-        //CONFIG
-            //DECLARING VARIABLES
-            var r = Raphael("holder");
-            var newDataSet = filter(data);
-            var paths = r.set()
-
+            //RAPHAEL GOODIES
             //CREATING RAPHAEL CANVAS AND & LOGIC TO DEFINE CUSTOM SEGMENT CREATING PATH ELEMENT FOR PIE SLICE
+            
+            var paper = Raphael("holder")
+            
+            var chart = {
+                
+                config: {
+                    total: 0,
+                    start: 0,
+
+                },
+                
+                init: function(x, y, r, a1, a2, color){
+                    console.log('init')
+                    console.log($(this))
+                },
+
+                animate: function(){
+                    console.log('animate')
+                },
+
+                expand: function(){
+                    console.log('expand')
+                },
+
+                filter: function(){
+                    console.log('filter')
+                }
+
+                
+            }
+
+
+
+            var r = Raphael("holder");
+
             r.customAttributes.segment = function (x, y, r, a1, a2, color) {
                 var flag = (a2 - a1) > 180,
                 a1 = (a1 % 360) * Math.PI / 180;
@@ -43,12 +72,11 @@ $(document).ready(function(){
                 };
             };
 
-        //FUNCTIONS
+            //ANIMATIONS
             //EXTENDING THE RADIUS TO MAKE CONSUMED RAPHAEL PATH VALUES VILISBLE
             function animate(ms) {
                 var start = 0,
                     val;
-                    console.log(newDataSet, paths)
                 for (i = 0; i < ii; i++) {
                     console.log(ii, i)
                     val = 360 / total * newDataSet[i].value;
@@ -57,8 +85,8 @@ $(document).ready(function(){
             }
             
             //EXTENDING THE RADIUS TO EXPAND SLICE ON HOVER
-            function expand(event) {
-                console.log(event.target)
+            function expand(fin, fout, icontext, ocontext) {
+                console.log(fin, fout, icontext, ocontext)
                 // var start = 0,
                 //     val;
                 // for (i = 0; i < ii; i++) {
@@ -74,34 +102,34 @@ $(document).ready(function(){
                 var newDataSet = []
                 var  elated = {
                     "mood": ":D",
-                    "color": "ff7373",
+                    "color": "df60b6",
                     "value": 0,
                     "content": [] 
                 }
                 var happy = {
                     "mood": ":)",
-                    "color": "fff6f7",
+                    "color": "f9b233",
                     "value": 0,
                     "content": [] 
                 }
 
                 var indifferent = {
                     "mood": ":|",
-                    "color": "dde6e8",
+                    "color": "cbbeb5",
                     "value": 0,
                     "content": [] 
                 }
 
                 var sad = {
                     "mood": ":(",
-                    "color": "b9cfd2",
+                    "color": "619bc8",
                     "value": 0,
                     "content": [] 
                 }
 
                  var down = {
                     "mood": ":*(",
-                    "color": "0d5875",
+                    "color": "31284c",
                     "value": 0,
                     "content": [] 
                 }
@@ -135,30 +163,30 @@ $(document).ready(function(){
                 return newDataSet;
             }
 
-            function init(){
-                //ITERATING THROUGH NEW DATA SET INTO RAPHAEL PATHES -- 1 RADIUS SO PIE SLICE IS NOT VISIBLE UNTIL ANIMATE FUNCTION CALLED
-                var total = 0;
-                for (var i = 0, ii = newDataSet.length; i < ii; i++) {
-                    total += newDataSet[i].value;
-                }
-                var start = 0;
-                for (i = 0; i < ii; i++) {
-                    var val = 360 / total * newDataSet[i].value;
-                    (function (i, val) {
-                        paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#808080"}).hover(function(){
-                                expand(event)
-                                //r.path().stop().animate({segment: [opacity: .5]})
-                            })
-                        );
-                    })(i, val);
-                    start += val;
-                }
-                
-            }
+            var newDataSet = filter(data)
 
-            init()
-            // animate(1000);
-            //animate callback function
+            //ITERATING THROUGH NEW DATA SET INTO RAPHAEL PATHES -- 1 RADIUS SO PIE SLICE IS NOT VISIBLE UNTIL ANIMATE FUNCTION CALLED
+            var paths = r.set()
+            var total = 0;
+            for (var i = 0, ii = newDataSet.length; i < ii; i++) {
+                total += newDataSet[i].value;
+            }
+            var start = 0;
+            for (i = 0; i < ii; i++) {
+                var val = 360 / total * newDataSet[i].value;
+                (function (i, val) {
+                    paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#808080"}).hover(function(){
+                            // $(this).expand()
+                            //do some hover stuff
+                            console.log('hey there')
+                            // console.log($(this)[0][0].attributes.fill)
+                        })
+                    );
+                })(i, val);
+                start += val;
+            }
+            
+            animate(1000);
 
 
             //KEY

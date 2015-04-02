@@ -37,6 +37,7 @@ $(document).ready(function(){
                     fill: "#" + color
                 };
             };
+
             //ANIMATING/EXTENDING THE RADIUS TO MAKE CONSUMED VALUES VILISBLE
             function animate(ms) {
                 var start = 0,
@@ -109,10 +110,21 @@ $(document).ready(function(){
                 newDataSet.push(sad)
                 newDataSet.push(down)
 
+            //KEY
+            var key = Raphael("key");
+            var colorCode = key.set()
+            colorCode.attr({stroke: "#bfbfbf"})
+            for (var i = 0, ii = newDataSet.length; i < ii; i++){
+                var percent = newDataSet.indexOf(newDataSet[i])+1 / newDataSet.length
+                colorCode.push(key.rect( 20, 80 * percent, 15, 15, 1).attr({fill: "#" + newDataSet[i].color}))
+                colorCode.push(key.text( 50, 80 * percent, newDataSet[i].mood).attr({ fill: "#808080", stroke: "none", "font-size": 15 }))
+            }
+
+            //CIRCLE BORDER
             var paths = r.set(),
                 total,
                 start, 
-                bg = r.circle(200, 200, 0).attr({stroke: "#bfbfbf", "stroke-width": 3});
+                bg = r.circle(200, 200, 0).attr({stroke: "#bfbfbf", "stroke-width": 2});
 
             //ITERATING THROUGH DATA INTO PATH SEGMENTS ON RAPHAEL OBJECT -- 1 RADIUS SO PIE SLICE IS NOT VISIBLE UNTIL ANIMATE FUNCTION CALLED
             total = 0;
@@ -126,6 +138,9 @@ $(document).ready(function(){
                     paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#808080"}).hover(function(){
                             //do some hover stuff
                     		// console.log($(this)[0][0].attributes.fill)
+
+                            console.log('hey there')
+                    		console.log($(this)[0][0].attributes.fill)
                     	})
                     );
                 })(i, val);

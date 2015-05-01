@@ -21,14 +21,20 @@ body {
     width: 640px;
 }
 
-#copy {
+#memberSince{
     bottom: 0;
-    font: 300 .7em "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+    font: 300 .9em "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
     color: #808080;
     position: absolute;
     right: 1em;
     text-align: right;
 }
-#copy a {
-    color: #fff;
+
+#entries{
+    bottom: 2em;
+    font: 300 .9em "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+    color: #808080;
+    position: absolute;
+    right: 1em;
+    text-align: right; 
 }

@@ -72,10 +72,10 @@ $(document).ready(function(){
                 }
             }
             
-            //EXTENDING THE RADIUS TO EXPAND SLICE ON HOVER
+            //DO SOMETHING WHEN HOVERING OVER THE PIE SLICE
             function expand(object) {
                 console.log(object)
-                object.animate({opacity: 0.5})
+                // object.animate({opacity: 0.5})
             }
 
             //FILTERING THROUGH DATA ARRAY AND RETURNING NEW DATA SET TO BE USED FOR RAPHAEL OBJECTS
@@ -169,9 +169,9 @@ $(document).ready(function(){
             var t = r.text(200, 20, today).attr({font: '100 20px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif', fill: "#808080"});
 
             var memberSince = data[0].date.split(" ")[0]
-            var copy = $('#copy').text('Member since ' + memberSince)
+            $("#entries").text("Total Entries: " + data.length)
+            $('#memberSince').text('Member since ' + memberSince)
             
-
         }//END SUCCESS
     });//END AJAX
     

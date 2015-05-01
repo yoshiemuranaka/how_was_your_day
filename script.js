@@ -52,9 +52,13 @@ $(document).ready(function(){
             for (i = 0; i < ii; i++) {
                 var val = 360 / total * newDataSet[i].value;
                 (function (i, val) {
-                    paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#808080"}).hover(function(){
-                            expand(paths[i])
-                        })
+                    paths.push(r.path().attr({segment: [200, 200, 1, start, start + val, newDataSet[i].color], stroke: "#808080"})
+                            .mouseover(function(){
+                                expand(paths[i])
+                            })
+                            // .mouseout(function(){
+                            //     doSomething(paths[i])
+                            // })
                     );
                 })(i, val);
                 start += val;
@@ -71,12 +75,30 @@ $(document).ready(function(){
                     paths[i].animate({segment: [200, 200, 150, start, start += val, newDataSet[i].color ]}, ms, "bounce");
                 }
             }
+
+
             
             //DO SOMETHING WHEN HOVERING OVER THE PIE SLICE
             function expand(object) {
-                console.log(object)
-                // object.animate({opacity: 0.5})
+                console.log(newDataSet[object.id])
+                var moodData = newDataSet[object.id]
+                var mood = moodData.mood
+                var value= moodData.value
+                headerKey.text(200, 20, mood + " "+ value).attr({ 
+                font: '100 20px "Helvetica Neue", Helvetica, Arial, sans-serif', 
+                fill: "#808080",
+                "font-size": 25,
+                "font-weight": "bold",
+                // "stroke": "#808080"
+            });
+                object.mouseout(function(){
+                    headerKey.clear()
+                })
             }
+
+            // function doSomething(object){
+            //     console.log("do something")
+            // }
 
             //FILTERING THROUGH DATA ARRAY AND RETURNING NEW DATA SET TO BE USED FOR RAPHAEL OBJECTS
             function filter(data, start, end){
@@ -164,12 +186,21 @@ $(document).ready(function(){
             bg.animate({r: 151}, 1000, "bounce");
 
         //ADDITIONAL TEXT
+            var header = Raphael("header")
+            var headerKey = Raphael("headerKey")
             var today = new Date(); 
 
-            var t = r.text(200, 20, today).attr({font: '100 20px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif', fill: "#808080"});
+            header.text(200, 20, today).attr({
+                font: '100 20px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif', 
+                fill: "#808080"
+            });
+
+            header.text(200, 50, "Total Entries: " + data.length).attr({ 
+                font: '100 20px "Helvetica Neue", Helvetica, Arial, sans-serif', 
+                fill: "#808080"
+            });
 
             var memberSince = data[0].date.split(" ")[0]
-            $("#entries").text("Total Entries: " + data.length)
             $('#memberSince').text('Member since ' + memberSince)
             
         }//END SUCCESS

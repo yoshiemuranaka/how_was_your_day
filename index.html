@@ -6,7 +6,14 @@
   	<script src="raphael.js"></script>
 	<script type="text/javascript" src="script.js"></script>
 	<style media="screen">
-	    #holder {
+	    #headerKey,
+	    #header{
+				height: 100px;
+        margin: -200px 0 0 -200px;
+        width: 400px;
+	    }
+	    
+	   	#holder {
         height: 400px;
         margin: -200px 0 0 -200px;
         width: 400px;
@@ -20,11 +27,12 @@
 </head>
 <body>
 
+	<header id="header"></header>
+	<div id="headerKey"></div>
 	<div id="holder"></div>
 	<div id="key"></div>
    	<p id="entries"></p>
    	<p id="memberSince"></p>
-
 
 	<script type="text/javascript">
 // Creates canvas 320 × 200 at 10, 50

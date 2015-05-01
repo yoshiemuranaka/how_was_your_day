@@ -3,13 +3,26 @@ body {
     color: #eee;
     font: 300 100.1% "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
 }
+
+#header{
+    left: 50%;
+    margin: -240px 0 0 -320px;
+    position: absolute;
+    top: 35%;
+}
+
+#headerKey{
+    left: 50%;
+    margin: -240px 0 0 -320px;
+    position: absolute;
+    top: 45%;
+}
+
 #holder {
-    height: 480px;
     left: 50%;
     margin: -240px 0 0 -320px;
     position: absolute;
     top: 50%;
-    width: 640px;
 }
 
 #key{

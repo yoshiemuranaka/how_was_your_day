@@ -3,7 +3,7 @@ $(document).ready(function(){
     var data = []
     //CALLING GOOGLE SHEETS 
     $.ajax({ 
-        url: 'http://spreadsheets.google.com/feeds/list/1pX221_XvKav8sTbd4mfcgU3CfsxNqbTXboHPXjP49Uw/2/public/basic?alt=json',
+        url: 'http://spreadsheets.google.com/feeds/list/1pX221_XvKav8sTbd4mfcgU3CfsxNqbTXboHPXjP49Uw/1/public/basic?alt=json',
         type: 'get',
         dataType: "json",
         success: function(json){  
